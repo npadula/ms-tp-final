@@ -21,4 +21,8 @@ def f(x, y):
 def fej(x,y):
     return (x*y)/10.0
  
-xs, ys = rk4(fej, 1, 0.2, 5, 100000)
+xs, ys = rk4(fej, 1, 0.2, 5, 4)
+
+
+for x,y in zip(xs,ys):
+    print(fej(x,y))
