@@ -1,9 +1,10 @@
 from math import sqrt
+import numpy
  
-def rk4(f, x0, y0, x1, n):
+def rk4(f, x0, y0, xfinal, n):
     xs = [0] * (n + 1)
     ys = [0] * (n + 1)
-    h = (x1 - x0) / float(n)
+    h = (xfinal - x0) / float(n)
     xs[0] = x = x0
     ys[0] = y = y0
     for i in range(1, n + 1):
@@ -26,3 +27,6 @@ xs, ys = rk4(fej, 1, 0.2, 5, 4)
 
 for x,y in zip(xs,ys):
     print(fej(x,y))
+    
+def sol_analitica(x):
+    return 0.1902*numpy.exp((numpy.power(x,2))/20)
