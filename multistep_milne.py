@@ -1,5 +1,6 @@
 from math import sqrt
 import numpy
+import matplotlib.pyplot as plt
  
 #Runge-Kutta de orden 4
 def rk4(f, x0, y0, xfinal, n):
@@ -52,7 +53,7 @@ def sol_analitica(x):
 
 #Tomamos como punto final x=10, con 1000000 puntos en total
 #Calculamos los valores con el R-K
-xs, ys = rk4(f, 1, 0.2, 10, 1000000)
+xs, ys = rk4(f, 1, 0.2, 10, 9)
 
 #Tomamos los tres primeros valores para inicializar el P-C de Milne
 xsm = xs[0:3]
@@ -65,7 +66,43 @@ for x,y in zip(xsm,ysm):
     
 #Resolvemos por Milne
 milne(f,xsm,ysm,fs,10)
-    
 
+
+#Solucion exacta
+yexacta = []
+err_RK = []
+err_milne = []
+for (xrk,xmilne,yrk,ymilne) in zip(xs,xsm,ys,ysm):
+    yex = sol_analitica(xrk)
+    
+    yexacta.append(yex)
+    erk = numpy.abs(yex - yrk )
+    emilne = numpy.abs(yex - ymilne)
+    err_RK.append(erk)
+    err_milne.append(emilne)
+    
+    
+    
+#Grafico de los datos obtenidos
+#y(x)
+figure, axes = plt.subplots(2,1)
+axes[0].set_xlabel('x')
+axes[0].set_ylabel('y(x)')
+#axes[0].set_yscale('log',basey=10)
+axes[0].plot(xs,ys, color='blue', label='R-K4')
+axes[0].plot(xsm,ysm, color='red', label='Milne P-C')
+axes[0].plot(xs,yexacta, color='yellow', label='Solucion Analitica')
+
+
+#|error|
+axes[1].set_xlabel('x')
+axes[1].set_ylabel('|Error|')
+axes[1].plot(xs,err_RK, color='blue', label='R-K4')
+axes[1].plot(xsm,err_milne,color='red',label='Milne P-C')
+axes[1].plot([],[],color='yellow',label='Solucion Analítica')
+
+
+plt.legend(bbox_to_anchor=(0.5, 2.45), loc=2, borderaxespad=0.)
+plt.show()
 
 
