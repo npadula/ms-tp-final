@@ -53,7 +53,7 @@ def sol_analitica(x):
 
 #Tomamos como punto final x=10, con 1000000 puntos en total
 #Calculamos los valores con el R-K
-xs, ys = rk4(f, 1, 0.2, 10, 9)
+xs, ys = rk4(f, 1, 0.2, 10, 100000)
 
 #Tomamos los tres primeros valores para inicializar el P-C de Milne
 xsm = xs[0:3]
